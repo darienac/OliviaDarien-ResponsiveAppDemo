@@ -118,8 +118,12 @@ fun Demo1(case: Int) {
         Pair("1", Color.hsl(0f, 1f, 0.83f)),
         Pair("2", Color.hsl(32f, 1f, 0.83f)),
         Pair("3", Color.hsl(93f, 1f, 0.83f)),
-//        Pair("4", Color.hsl(190f, 1f, 0.83f)),
-//        Pair("5", Color.hsl(244f, 1f, 0.83f))
+        Pair("4", Color.hsl(190f, 1f, 0.83f)),
+        Pair("5", Color.hsl(244f, 1f, 0.83f)),
+        Pair("6", Color.hsl(190f, 1f, 0.83f)),
+        Pair("7", Color.hsl(93f, 1f, 0.83f)),
+        Pair("8", Color.hsl(32f, 1f, 0.83f)),
+        Pair("9", Color.hsl(0f, 1f, 0.83f)),
     ).take(case) // take only the number of cards specified by case
 
     Column(
@@ -172,13 +176,13 @@ fun Demo2(height: Dp, width: Dp) {
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically) {
                 Column (horizontalAlignment = Alignment.CenterHorizontally){
-                    if (height >= 190.dp){
+                    if (height >= 230.dp && width >= 200.dp){
                         Text(text = name,
                             fontWeight = FontWeight.Bold,
                             fontSize = 40.sp,
                             modifier = Modifier
                                 .padding(16.dp))}
-                    if (height >= 350.dp){
+                    if (height >= 370.dp && width >= 200.dp){
                         Spacer(modifier = Modifier.width(16.dp))
                         Box(
                             modifier = Modifier
@@ -188,7 +192,7 @@ fun Demo2(height: Dp, width: Dp) {
                                 .background(Color.Red)
                         ) {
                     }}
-                    if (height >= 390.dp){
+                    if (height >= 390.dp && width >= 275.dp){
                         Spacer(modifier = Modifier.width(16.dp))
                         Text(text = "This is information on John Smith",
                             textAlign = TextAlign.Center,
@@ -282,13 +286,31 @@ fun ResizerAppLayout(modifier: Modifier = Modifier) {
             ) {
                 when (selectedDemo) {
                     0 ->
-                        if (with(LocalDensity.current) {boxSize.width.toDp()} >= 360.dp ){
+                        if (with(LocalDensity.current) {boxSize.width.toDp()} >= 1260.dp ) {
+                            Demo1(9)
+                        }
+                        else if (with(LocalDensity.current) {boxSize.width.toDp()} >= 1120.dp ) {
+                            Demo1(8)
+                        }
+                        else if (with(LocalDensity.current) {boxSize.width.toDp()} >= 980.dp ){
+                            Demo1(7)
+                        }
+                        else if (with(LocalDensity.current) {boxSize.width.toDp()} >= 840.dp ){
+                            Demo1(6)
+                        }
+                        else if (with(LocalDensity.current) {boxSize.width.toDp()} >= 700.dp ) {
+                            Demo1(5)
+                        }
+                        else if (with(LocalDensity.current) {boxSize.width.toDp()} >= 560.dp ){
+                            Demo1(4)
+                        }
+                        else if (with(LocalDensity.current) {boxSize.width.toDp()} >= 420.dp ){
                             Demo1(3)
                         }
-                        else if (with(LocalDensity.current) {boxSize.width.toDp()} >= 260.dp){
+                        else if (with(LocalDensity.current) {boxSize.width.toDp()} >= 280.dp){
                             Demo1(2)
                         }
-                        else if (with(LocalDensity.current) {boxSize.width.toDp()} >= 130.dp){
+                        else if (with(LocalDensity.current) {boxSize.width.toDp()} >= 140.dp){
                             Demo1(1)
                         }
                         else{
