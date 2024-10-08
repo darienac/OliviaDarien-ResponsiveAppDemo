@@ -4,7 +4,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.snapping.SnapFlingBehavior
+import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,8 +21,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -48,6 +53,7 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.oliviadarien_responsiveappdemo.ui.theme.OliviaDarienResponsiveAppDemoTheme
+import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 import kotlin.random.Random
 
 class MainActivity : ComponentActivity() {
@@ -88,11 +94,48 @@ fun DemoHeader(label: String) {
 }
 
 @Composable
-fun Demo1() {
-    Column(
-        modifier=Modifier.fillMaxWidth()
+fun Demo1Card(text: String, color: Color) {
+    Card(
+        modifier = Modifier
+            .padding(8.dp)
+            .size(104.dp, 50.dp)
     ) {
-        DemoHeader("Demo 1 Content Goes Here")
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxSize().background(color)
+        ) {
+            Text(text = text, fontSize = 30.sp)
+        }
+    }
+}
+
+
+@Composable
+fun Demo1(case: Int) {
+    val cardInfo = listOf(
+        Pair("1", Color.hsl(0f, 1f, 0.83f)),
+        Pair("2", Color.hsl(32f, 1f, 0.83f)),
+        Pair("3", Color.hsl(93f, 1f, 0.83f)),
+//        Pair("4", Color.hsl(190f, 1f, 0.83f)),
+//        Pair("5", Color.hsl(244f, 1f, 0.83f))
+    ).take(case) // take only the number of cards specified by case
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        DemoHeader("Breakpoints")
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            // create the cards
+            for (index in cardInfo.indices) {
+                Demo1Card(cardInfo[index].first, cardInfo[index].second)
+            }
+        }
     }
 }
 
@@ -185,7 +228,20 @@ fun ResizerAppLayout(modifier: Modifier = Modifier) {
                     }
             ) {
                 when (selectedDemo) {
-                    0 -> Demo1()
+                    0 ->
+
+                        if (with(LocalDensity.current) {boxSize.width.toDp()} >= 360.dp ){
+                            Demo1(3)
+                        }
+                        else if (with(LocalDensity.current) {boxSize.width.toDp()} >= 260.dp){
+                            Demo1(2)
+                        }
+                        else if (with(LocalDensity.current) {boxSize.width.toDp()} >= 130.dp){
+                            Demo1(1)
+                        }
+                        else{
+                            Demo1(0)
+                        }
                     1 -> Demo2()
                     2 -> Demo3()
                 }
