@@ -129,7 +129,7 @@ fun Demo1(case: Int) {
         DemoHeader("Breakpoints")
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.Center,
         ) {
             // create the cards
             for (index in cardInfo.indices) {
