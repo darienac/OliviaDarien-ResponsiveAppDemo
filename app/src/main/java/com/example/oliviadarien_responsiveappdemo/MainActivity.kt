@@ -153,7 +153,7 @@ fun Demo2(height: Dp, width: Dp) {
     if(width >= 300.dp){
         name = "John Smith"
     }
-    else if (width >= 230.dp){
+    else if (width >= 200.dp){
         name = "John"
     }
     else{
