@@ -48,7 +48,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -140,11 +142,62 @@ fun Demo1(case: Int) {
 }
 
 @Composable
-fun Demo2() {
+fun Demo2(height: Dp, width: Dp) {
+    // height 3) name, pic, description 2) name, description 1) name 0) nothing
+    // width 2) john smith 1) john 0) nothing
+    var name by remember {mutableStateOf("John Smith")}
+    if(width >= 300.dp){
+        name = "John Smith"
+    }
+    else if (width >= 230.dp){
+        name = "John"
+    }
+    else{
+        name = ""
+    }
+
     Column(
-        modifier=Modifier.fillMaxWidth()
+        modifier=Modifier.fillMaxWidth(),
+        horizontalAlignment=Alignment.CenterHorizontally
     ) {
-        DemoHeader("Demo 2 Content Goes Here")
+        DemoHeader("Adaptive Design")
+        Column(
+            modifier = Modifier
+                .padding(8.dp)
+                .background(MaterialTheme.colorScheme.background)
+                .fillMaxWidth()
+            , horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row(modifier = Modifier.padding(16.dp),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically) {
+                Column (horizontalAlignment = Alignment.CenterHorizontally){
+                    if (height >= 190.dp){
+                        Text(text = name,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 40.sp,
+                            modifier = Modifier
+                                .padding(16.dp))}
+                    if (height >= 350.dp){
+                        Spacer(modifier = Modifier.width(16.dp))
+                        Box(
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .size(100.dp)
+                                .clip(CircleShape)
+                                .background(Color.Red)
+                        ) {
+                    }}
+                    if (height >= 390.dp){
+                        Spacer(modifier = Modifier.width(16.dp))
+                        Text(text = "This is information on John Smith",
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .padding(16.dp))
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -229,7 +282,6 @@ fun ResizerAppLayout(modifier: Modifier = Modifier) {
             ) {
                 when (selectedDemo) {
                     0 ->
-
                         if (with(LocalDensity.current) {boxSize.width.toDp()} >= 360.dp ){
                             Demo1(3)
                         }
@@ -242,7 +294,7 @@ fun ResizerAppLayout(modifier: Modifier = Modifier) {
                         else{
                             Demo1(0)
                         }
-                    1 -> Demo2()
+                    1 -> Demo2((with(LocalDensity.current) {boxSize.height.toDp()}), (with(LocalDensity.current) {boxSize.width.toDp()}))
                     2 -> Demo3()
                 }
             }
